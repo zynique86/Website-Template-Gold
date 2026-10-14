@@ -127,13 +127,22 @@
     at(3400, () => finish(false));
   } else if (variant === "ink") {
     at(100, () => step("s1")); // 墨滴晕开
+    // 「缘」的墨色晕完（最后一个晕染动画结束）就立刻收起墨团、盖上印章，然后整页化开
+    let sealed = false;
+    const seal = () => {
+      if (sealed) return;
+      sealed = true;
+      step("s3");
+      at(900, () => { step("s4"); root.classList.remove("intro-playing"); });
+      at(1900, () => finish(false));
+    };
     at(700, () => {
       step("s2"); // 逐字书写，墨色随后慢慢晕开填满
-      op.querySelectorAll(".ink-anim").forEach((a) => at(+a.dataset.delay, () => a.beginElement && a.beginElement()));
+      const anims = [...op.querySelectorAll(".ink-anim")];
+      anims.forEach((a) => at(+a.dataset.delay, () => a.beginElement && a.beginElement()));
+      anims[anims.length - 1].addEventListener("endEvent", seal);
+      at(3750 + 150, seal); // 保底：个别浏览器不触发 endEvent 时也按时盖印
     });
-    at(4100, () => step("s3")); // 盖印
-    at(5000, () => { step("s4"); root.classList.remove("intro-playing"); }); // 墨色化开
-    at(6000, () => finish(false));
   } else if (variant === "scroll") {
     at(100, () => step("s1")); // 卷轴落下
     at(1000, () => { step("s2"); root.classList.remove("intro-playing"); }); // 向两侧展开
