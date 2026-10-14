@@ -19,7 +19,7 @@
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-  camera.position.set(0, 0.45, 4.6);
+  camera.position.set(0, 0.45, 5.4);
   camera.lookAt(0, 0, 0);
 
   /* ---------- 钻石几何：台面 + 冠部 + 腰棱 + 亭部 ---------- */
