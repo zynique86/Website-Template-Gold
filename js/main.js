@@ -84,6 +84,7 @@ function productArt(p) {
   const [c1, c2] = CATEGORIES[p.cat].colors;
   const gid = "g" + p.id + "-" + (productArt.n = (productArt.n || 0) + 1);
   const grad = `<defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c2}"/><stop offset="1" stop-color="${c1}"/></linearGradient></defs>`;
+  if (p.cat === "pearl") return pearlArt(p, gid);
   const shapes = {
     ring: `<circle cx="100" cy="112" r="44" fill="none" stroke="url(#${gid})" stroke-width="12"/><circle cx="100" cy="62" r="16" fill="url(#${gid})"/>`,
     bangle: `<ellipse cx="100" cy="100" rx="62" ry="54" fill="none" stroke="url(#${gid})" stroke-width="16"/>`,
@@ -94,6 +95,43 @@ function productArt(p) {
     studs: `<circle cx="70" cy="100" r="22" fill="url(#${gid})"/><circle cx="130" cy="100" r="22" fill="url(#${gid})"/><circle cx="64" cy="93" r="6" fill="#fff" fill-opacity=".6"/><circle cx="124" cy="93" r="6" fill="#fff" fill-opacity=".6"/>`,
   };
   return `<svg viewBox="0 0 200 200" role="img" aria-label="${escapeHtml(p.name)}">${grad}${shapes[TYPES[p.type].shape] || shapes.gem}</svg>`;
+}
+
+/* 珍珠插画：按款式排列珍珠，黑珍珠、金珠、白珠分别着色 */
+function pearlArt(p, gid) {
+  const tone = { p2: ["#6b7a78", "#1d2326", "#3c5a52"], p3: ["#fff3cf", "#d9a94a", "#b98a2f"] }[p.id] || ["#ffffff", "#e9dfd6", "#b9aca2"];
+  const defs = `<defs><radialGradient id="${gid}" cx="35%" cy="32%" r="70%"><stop offset="0" stop-color="${tone[0]}"/><stop offset=".55" stop-color="${tone[1]}"/><stop offset="1" stop-color="${tone[2]}"/></radialGradient></defs>`;
+  const bead = (x, y, r) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="url(#${gid})"/><circle cx="${(x - r * 0.35).toFixed(1)}" cy="${(y - r * 0.38).toFixed(1)}" r="${(r * 0.28).toFixed(1)}" fill="#fff" fill-opacity=".75"/>`;
+  const gold = "#c9a24a";
+  let body = "";
+  if (p.type === "necklace") {
+    for (let i = 0; i <= 14; i++) {
+      const t = i / 14;
+      const x = (1 - t) * (1 - t) * 34 + 2 * (1 - t) * t * 100 + t * t * 166;
+      const y = (1 - t) * (1 - t) * 44 + 2 * (1 - t) * t * 176 + t * t * 44;
+      body += bead(x, y, 9);
+    }
+  } else if (p.type === "pendant") {
+    body = `<path d="M50 40 L100 104 L150 40" fill="none" stroke="${gold}" stroke-width="2"/><circle cx="100" cy="104" r="5" fill="${gold}"/>` + bead(100, 134, 26);
+  } else if (p.type === "earring") {
+    body = `<circle cx="70" cy="74" r="4" fill="${gold}"/><circle cx="130" cy="74" r="4" fill="${gold}"/><path d="M70 78v12M130 78v12" stroke="${gold}" stroke-width="2"/>` + bead(70, 112, 22) + bead(130, 112, 22);
+  } else if (p.type === "ring") {
+    body = `<circle cx="100" cy="124" r="40" fill="none" stroke="${gold}" stroke-width="8"/>` + bead(100, 74, 24);
+  } else if (p.type === "bracelet") {
+    for (let i = 0; i < 18; i++) {
+      const a = (i / 18) * Math.PI * 2;
+      body += bead(100 + Math.cos(a) * 62, 104 + Math.sin(a) * 34, 8);
+    }
+  } else if (p.type === "bangle") {
+    body = `<path d="M62 128 A62 46 0 1 1 138 128" fill="none" stroke="#c8ced6" stroke-width="10" stroke-linecap="round"/>` + bead(60, 132, 15) + bead(140, 132, 15);
+  } else {
+    body = `<ellipse cx="100" cy="104" rx="64" ry="30" fill="none" stroke="${gold}" stroke-width="2" stroke-dasharray="4 4"/>`;
+    for (let i = 0; i < 5; i++) {
+      const a = Math.PI * (0.15 + i * 0.175);
+      body += bead(100 + Math.cos(a) * 64, 104 + Math.sin(a) * 30, 8);
+    }
+  }
+  return `<svg viewBox="0 0 200 200" role="img" aria-label="${escapeHtml(p.name)}">${defs}${body}</svg>`;
 }
 
 function productCard(p) {
@@ -325,6 +363,15 @@ function sceneDecor(key) {
       <span class="cloud cloud-1"></span><span class="cloud cloud-3"></span>`;
   }
   if (key === "gold") return `<span class="gold-rays"></span><span class="cloud cloud-1"></span><span class="cloud cloud-3"></span>`;
+  if (key === "pearl") {
+    return `
+      <span class="pearl-moon"></span>
+      <svg class="sea-waves" viewBox="0 0 1440 240" preserveAspectRatio="none">
+        <path d="M0 80Q90 40 180 80T360 80T540 80T720 80T900 80T1080 80T1260 80T1440 80V240H0Z" fill="#4f8fa3" opacity=".18"/>
+        <path d="M0 130Q90 95 180 130T360 130T540 130T720 130T900 130T1080 130T1260 130T1440 130V240H0Z" fill="#2f6e86" opacity=".28"/>
+        <path d="M0 180Q90 150 180 180T360 180T540 180T720 180T900 180T1080 180T1260 180T1440 180V240H0Z" fill="#163f55" opacity=".5"/>
+      </svg>`;
+  }
   if (key === "silver") return `<span class="porcelain"></span><span class="moon-disc"></span>`;
   return `<span class="star-field"></span>`;
 }

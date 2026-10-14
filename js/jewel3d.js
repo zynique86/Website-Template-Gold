@@ -152,6 +152,22 @@ function mountJewel3D(host) {
     diamond.scale.setScalar(0.95);
     diamond.position.y = -0.15;
     baseTilt = 0.15;
+  } else if (kind === "pearl") {
+    // 珍珠项链：一圈渐变大小的珍珠，带珠光
+    const pearlMat = new THREE.MeshPhysicalMaterial({ color: 0xfbf3ea, metalness: 0, roughness: 0.18, clearcoat: 1, clearcoatRoughness: 0.08, envMap: env, envMapIntensity: 1.1 });
+    const n = 30;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const size = 0.13 + 0.05 * Math.pow(Math.cos(a / 2), 2); // 前面的珠子更大
+      const m = new THREE.Mesh(new THREE.SphereGeometry(size, 32, 24), pearlMat);
+      m.position.set(Math.sin(a) * 1.05, 0, Math.cos(a) * 1.05);
+      diamond.add(m);
+    }
+    const drop = new THREE.Mesh(new THREE.SphereGeometry(0.3, 48, 32), pearlMat);
+    drop.position.set(0, -0.42, 1.12);
+    drop.scale.set(1, 1.15, 1);
+    diamond.add(drop);
+    baseTilt = 0.55;
   } else if (kind === "silver") {
     // 纯银开口手镯：两端各有一颗银珠
     const arc = Math.PI * 1.7;

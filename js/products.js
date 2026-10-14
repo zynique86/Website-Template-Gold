@@ -32,6 +32,14 @@ const CATEGORIES = {
     intro: "严选GIA认证钻石，4C标准层层把关。从求婚钻戒到纪念项链，为每一个重要时刻定格永恒光芒。",
     colors: ["#6d8fb8", "#d6e6f7"],
   },
+  pearl: {
+    name: "珍珠",
+    en: "Pearl",
+    page: "pearl.html",
+    tagline: "珠圆玉润 · 温柔光华",
+    intro: "甄选日本Akoya、南洋金珠、大溪地黑珍珠与优质淡水珍珠。正圆强光、皮光细腻，每一颗都经过多轮挑选与配对。",
+    colors: ["#cdbfb4", "#fffaf4"],
+  }
 };
 
 // 款式（每个材质页按款式筛选）
@@ -101,6 +109,20 @@ const PRODUCTS = [
   { id: "d10", cat: "diamond", type: "bracelet", name: "单钻细链手链", price: 3980, desc: "10分单钻，18K玫瑰金细链。" },
   { id: "d11", cat: "diamond", type: "bangle", name: "半圈镶钻手镯", price: 15800, desc: "18K白金，半圈排钻，开合设计。" },
   { id: "d12", cat: "diamond", type: "anklet", name: "钻石点缀脚链", price: 4580, desc: "18K白金细链，间隔镶嵌小钻。" },
+
+  // 珍珠
+  { id: "p1", cat: "pearl", type: "necklace", name: "Akoya海水珍珠项链", price: 9800, tag: "热销", desc: "8-8.5mm正圆强光，18K金扣，长度45cm。" },
+  { id: "p2", cat: "pearl", type: "necklace", name: "大溪地黑珍珠项链", price: 26800, tag: "珍藏", desc: "10-12mm孔雀绿伴彩，天然黑珍珠，一珠一证。" },
+  { id: "p3", cat: "pearl", type: "pendant", name: "南洋金珠吊坠", price: 12800, tag: "新品", desc: "11mm浓金色南洋珠，18K金镶小钻。" },
+  { id: "p4", cat: "pearl", type: "pendant", name: "澳白珍珠吊坠", price: 8800, desc: "10mm澳洲白珠，银白伴粉晕彩。" },
+  { id: "p5", cat: "pearl", type: "earring", name: "淡水珍珠耳钉", price: 699, tag: "新品", desc: "7-7.5mm近圆强光，S925银耳针。" },
+  { id: "p6", cat: "pearl", type: "earring", name: "巴洛克珍珠耳坠", price: 1280, desc: "异形巴洛克珠，每对独一无二。" },
+  { id: "p7", cat: "pearl", type: "ring", name: "Akoya珍珠戒指", price: 5800, desc: "8mm Akoya主珠，18K白金群镶小钻。" },
+  { id: "p8", cat: "pearl", type: "ring", name: "淡水珍珠开口戒", price: 459, desc: "双珠开口设计，尺寸可调。" },
+  { id: "p9", cat: "pearl", type: "bracelet", name: "淡水珍珠手链", price: 899, desc: "6-7mm珍珠串，18K金扣。" },
+  { id: "p10", cat: "pearl", type: "bracelet", name: "珍珠多层手链", price: 1580, desc: "三层小米珠叠戴，温柔精致。" },
+  { id: "p11", cat: "pearl", type: "bangle", name: "珍珠银镯", price: 1880, desc: "足银开口镯，两端各镶一颗淡水珍珠。" },
+  { id: "p12", cat: "pearl", type: "anklet", name: "珍珠脚链", price: 459, desc: "细链间隔小珍珠，夏日海边必备。" },
 ];
 
 function findProduct(id) {
@@ -169,4 +191,19 @@ const CATEGORY_THEMES = {
       ["切", "Cut 切工", "唯一由人工决定的C。3EX（切工、抛光、对称均为极好）火彩最佳。"],
     ],
   },
+  pearl: {
+    seal: "珠",
+    frame: "shell",
+    poem: ["沧海月明珠有泪", "珠圆玉润"],
+    stats: ["海水珍珠", "AAA级光泽", "一珠一证"],
+    spotlight: "p2",
+    story: "来自法属波利尼西亚的大溪地黑珍珠，在黑蝶贝中孕育三年以上。墨黑底色泛着孔雀绿与紫红伴彩，十余颗经过数千颗挑选配对，粒粒圆润同色。",
+    specs: [["产地", "大溪地 · 海水"], ["直径", "10 - 12 mm"], ["伴彩", "孔雀绿"], ["证书", "国检珍珠证书"]],
+    guide: [
+      ["光", "看光泽", "光泽最重要。好的珍珠表面像镜子，能清晰映出人影，光泽锐利不发雾。"],
+      ["圆", "看圆度", "正圆最稀有、最贵；近圆、椭圆次之。巴洛克异形珠则以独特造型取胜。"],
+      ["瑕", "看皮光", "表面越光滑、斑点越少越好。轻微生长纹是天然证明，不必苛求完美。"],
+      ["径", "看大小", "同品质下越大越贵。淡水珠多为5-9mm，Akoya 6-9mm，南洋珠可达10-15mm。"],
+    ],
+  }
 };

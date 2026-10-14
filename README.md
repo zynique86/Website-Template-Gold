@@ -11,6 +11,7 @@
 | 金饰 | `gold.html` |
 | 银饰 | `silver.html` |
 | 钻石 | `diamond.html` |
+| 珍珠 | `pearl.html` |
 | 购物车 | `cart.html` |
 | 下单付款 | `checkout.html` |
 

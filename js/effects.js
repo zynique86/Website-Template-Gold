@@ -245,12 +245,12 @@
     if (heroCanvas) goldDust(heroCanvas, { count: 90 });
 
     const catHero = document.querySelector(".cat-hero");
-    if (catHero && ["gold", "diamond"].includes(document.body.dataset.page)) {
+    if (catHero && ["gold", "diamond", "pearl"].includes(document.body.dataset.page)) {
       const c = document.createElement("canvas");
       c.className = "fx-dust";
       c.setAttribute("aria-hidden", "true");
       catHero.prepend(c);
-      const hues = { gold: 44, diamond: 210 };
+      const hues = { gold: 44, diamond: 210, pearl: 190 };
       goldDust(c, { count: 50, hue: hues[document.body.dataset.page] });
     }
 
