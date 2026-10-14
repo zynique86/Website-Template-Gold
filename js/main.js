@@ -1,6 +1,14 @@
 // 公共逻辑：页头页脚、商品插画、购物车、各页面渲染
 const CART_KEY = "jinyu_cart";
 
+// 每次进入页面（包括用浏览器返回、或从别的分类切回来）都从最上面开始；
+// 地址带 #锚点（如 #products）时仍跳到对应位置。
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+function scrollToTopUnlessHash() {
+  if (!location.hash || location.hash.length < 2 || !document.getElementById(location.hash.slice(1))) window.scrollTo(0, 0);
+}
+window.addEventListener("pageshow", scrollToTopUnlessHash);
+
 function formatPrice(n) {
   return "¥" + n.toLocaleString("zh-CN");
 }
