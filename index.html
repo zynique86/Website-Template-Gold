@@ -14,8 +14,9 @@
   <main>
     <section class="hero">
       <canvas class="fx-dust" aria-hidden="true"></canvas>
-      <div class="hero-gem" aria-hidden="true">
-        <div class="gem-halo"></div>
+      <div class="hero-gem" data-diamond3d aria-hidden="true">
+        <div class="gem-glow"></div>
+        <div class="gem-floor"></div>
         <svg class="gem-svg" viewBox="0 0 240 220">
           <defs>
             <linearGradient id="gf1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff8e1"/><stop offset=".5" stop-color="#e9d29a"/><stop offset="1" stop-color="#8a6a22"/></linearGradient>
@@ -37,10 +38,10 @@
           </g>
           <rect class="gem-sweep" x="-120" y="0" width="80" height="220" fill="url(#gsheen)" clip-path="url(#gclip)" transform="skewX(-20)"/>
         </svg>
-        <span class="twinkle" style="--x:18%;--y:22%;--d:0s"></span>
-        <span class="twinkle" style="--x:82%;--y:30%;--d:.8s"></span>
-        <span class="twinkle" style="--x:60%;--y:78%;--d:1.6s"></span>
-        <span class="twinkle" style="--x:30%;--y:64%;--d:2.3s"></span>
+        <span class="twinkle" style="--x:30%;--y:36%;--d:0s"></span>
+        <span class="twinkle" style="--x:68%;--y:40%;--d:.8s"></span>
+        <span class="twinkle" style="--x:56%;--y:30%;--d:1.6s"></span>
+        <span class="twinkle" style="--x:44%;--y:58%;--d:2.3s"></span>
       </div>
       <div class="container hero-copy">
         <p class="eyebrow">SINCE 1998 · 匠心珠宝</p>
@@ -93,5 +94,7 @@
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
   <script src="js/effects.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/diamond3d.js"></script>
 </body>
 </html>

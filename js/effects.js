@@ -70,24 +70,6 @@
     frame();
   }
 
-  /* ---------- 横幅宝石随鼠标轻微转动 ---------- */
-  function gemParallax() {
-    const hero = document.querySelector(".hero");
-    const gem = document.querySelector(".hero-gem");
-    if (!hero || !gem || !finePointer || reduceMotion) return;
-    hero.addEventListener("pointermove", (e) => {
-      const r = hero.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      gem.style.setProperty("--rx", `${-y * 18}deg`);
-      gem.style.setProperty("--ry", `${x * 24}deg`);
-    });
-    hero.addEventListener("pointerleave", () => {
-      gem.style.setProperty("--rx", "0deg");
-      gem.style.setProperty("--ry", "0deg");
-    });
-  }
-
   /* ---------- 卡片 3D 倾斜 + 跟随光斑 ---------- */
   function cardTilt() {
     if (!finePointer || reduceMotion) return;
@@ -272,7 +254,6 @@
       goldDust(c, { count: 50, hue: hues[document.body.dataset.page] });
     }
 
-    gemParallax();
     cardTilt();
     scrollReveal();
     flyToCart();
