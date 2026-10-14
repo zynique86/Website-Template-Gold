@@ -13,9 +13,38 @@
   <header data-header></header>
   <main>
     <section class="hero">
-      <div class="container">
+      <canvas class="fx-dust" aria-hidden="true"></canvas>
+      <div class="hero-gem" aria-hidden="true">
+        <div class="gem-halo"></div>
+        <svg class="gem-svg" viewBox="0 0 240 220">
+          <defs>
+            <linearGradient id="gf1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff8e1"/><stop offset=".5" stop-color="#e9d29a"/><stop offset="1" stop-color="#8a6a22"/></linearGradient>
+            <linearGradient id="gf2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf5"/><stop offset="1" stop-color="#b8913a"/></linearGradient>
+            <linearGradient id="gsheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <clipPath id="gclip"><polygon points="20,70 70,15 170,15 220,70 120,205"/></clipPath>
+          </defs>
+          <g class="gem-facets">
+            <polygon points="20,70 70,15 170,15 220,70 120,205" fill="url(#gf1)"/>
+            <polygon points="70,15 95,70 120,15" fill="url(#gf2)" opacity=".9"/>
+            <polygon points="120,15 145,70 170,15" fill="url(#gf2)" opacity=".7"/>
+            <polygon points="20,70 70,15 95,70" fill="#fff" opacity=".35"/>
+            <polygon points="145,70 170,15 220,70" fill="#8a6a22" opacity=".35"/>
+            <polygon points="95,70 120,15 145,70" fill="#fff" opacity=".55"/>
+            <polygon points="20,70 95,70 120,205" fill="#fff" opacity=".18"/>
+            <polygon points="95,70 145,70 120,205" fill="#fff" opacity=".35"/>
+            <polygon points="145,70 220,70 120,205" fill="#5a4417" opacity=".3"/>
+            <polyline points="20,70 220,70" stroke="#fff" stroke-opacity=".7" stroke-width="1.5" fill="none"/>
+          </g>
+          <rect class="gem-sweep" x="-120" y="0" width="80" height="220" fill="url(#gsheen)" clip-path="url(#gclip)" transform="skewX(-20)"/>
+        </svg>
+        <span class="twinkle" style="--x:18%;--y:22%;--d:0s"></span>
+        <span class="twinkle" style="--x:82%;--y:30%;--d:.8s"></span>
+        <span class="twinkle" style="--x:60%;--y:78%;--d:1.6s"></span>
+        <span class="twinkle" style="--x:30%;--y:64%;--d:2.3s"></span>
+      </div>
+      <div class="container hero-copy">
         <p class="eyebrow">SINCE 1998 · 匠心珠宝</p>
-        <h1>金玉良缘<br><span>珍藏每一刻光芒</span></h1>
+        <h1><span class="reveal-line">金玉良缘</span><br><span class="reveal-line shimmer-text">珍藏每一刻光芒</span></h1>
         <p>从温润翡翠到璀璨钻石，我们以二十余年匠心，为您甄选每一件值得传承的珠宝。</p>
         <div class="actions">
           <a class="btn" href="#categories">探索系列</a>
@@ -23,6 +52,13 @@
         </div>
       </div>
     </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>GIA 国际认证钻石</span><span>◆</span><span>缅甸天然A货翡翠</span><span>◆</span><span>足金999 古法工艺</span><span>◆</span><span>S925 纯银</span><span>◆</span><span>满¥999 顺丰包邮</span><span>◆</span><span>终身免费清洗保养</span><span>◆</span>
+        <span>GIA 国际认证钻石</span><span>◆</span><span>缅甸天然A货翡翠</span><span>◆</span><span>足金999 古法工艺</span><span>◆</span><span>S925 纯银</span><span>◆</span><span>满¥999 顺丰包邮</span><span>◆</span><span>终身免费清洗保养</span><span>◆</span>
+      </div>
+    </div>
 
     <section class="section" id="categories">
       <div class="container">
@@ -56,5 +92,6 @@
   <footer data-footer></footer>
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/effects.js"></script>
 </body>
 </html>
