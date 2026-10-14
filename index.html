@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="home">
+  <script>if (["#box", "#gate", "#ink", "#scroll"].includes(location.hash)) document.documentElement.classList.add("intro-playing");</script>
   <header data-header></header>
   <main>
     <section class="hero">
@@ -103,6 +104,7 @@
     </section>
   </main>
   <footer data-footer></footer>
+  <script src="js/intro.js"></script>
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
   <script src="js/effects.js"></script>
