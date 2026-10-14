@@ -89,9 +89,11 @@ function productArt(p) {
     bangle: `<ellipse cx="100" cy="100" rx="62" ry="54" fill="none" stroke="url(#${gid})" stroke-width="16"/>`,
     drop: `<path d="M40 40 Q100 110 160 40" fill="none" stroke="#b9a57a" stroke-width="2"/><path d="M100 86 C80 112 78 132 100 152 C122 132 120 112 100 86Z" fill="url(#${gid})"/>`,
     gem: `<polygon points="60,78 80,54 120,54 140,78 100,150" fill="url(#${gid})"/><polyline points="60,78 140,78" stroke="#fff" stroke-opacity=".6" stroke-width="2" fill="none"/><polyline points="80,54 90,78 100,150 110,78 120,54" stroke="#fff" stroke-opacity=".45" stroke-width="1.5" fill="none"/>`,
+    chain: `<path d="M44 96 Q100 150 156 96" fill="none" stroke="url(#${gid})" stroke-width="6" stroke-dasharray="10 5" stroke-linecap="round"/><circle cx="100" cy="122" r="12" fill="url(#${gid})"/>`,
+    anklet: `<ellipse cx="100" cy="104" rx="60" ry="26" fill="none" stroke="url(#${gid})" stroke-width="5" stroke-dasharray="8 5" stroke-linecap="round"/><circle cx="84" cy="134" r="7" fill="url(#${gid})"/><circle cx="116" cy="134" r="7" fill="url(#${gid})"/>`,
     studs: `<circle cx="70" cy="100" r="22" fill="url(#${gid})"/><circle cx="130" cy="100" r="22" fill="url(#${gid})"/><circle cx="64" cy="93" r="6" fill="#fff" fill-opacity=".6"/><circle cx="124" cy="93" r="6" fill="#fff" fill-opacity=".6"/>`,
   };
-  return `<svg viewBox="0 0 200 200" role="img" aria-label="${escapeHtml(p.name)}">${grad}${shapes[p.shape] || shapes.gem}</svg>`;
+  return `<svg viewBox="0 0 200 200" role="img" aria-label="${escapeHtml(p.name)}">${grad}${shapes[TYPES[p.type].shape] || shapes.gem}</svg>`;
 }
 
 function productCard(p) {
@@ -99,7 +101,7 @@ function productCard(p) {
     <article class="card">
       <div class="card-art">${productArt(p)}${p.tag ? `<span class="badge">${p.tag}</span>` : ""}</div>
       <div class="card-body">
-        <p class="card-cat">${CATEGORIES[p.cat].name}</p>
+        <p class="card-cat">${CATEGORIES[p.cat].name} · ${TYPES[p.type].name}</p>
         <h3>${escapeHtml(p.name)}</h3>
         <p class="card-desc">${escapeHtml(p.desc)}</p>
         <div class="card-foot">
@@ -204,13 +206,30 @@ function renderCategory(key) {
 
   const grid = document.querySelector("[data-products]");
   const sortSel = document.querySelector("[data-sort]");
+  const tabs = document.querySelector("[data-types]");
+  const inCat = PRODUCTS.filter((p) => p.cat === key);
+  // 只显示该材质下有商品的款式，网址带 #ring 等可直接打开对应款式
+  const types = Object.keys(TYPES).filter((t) => inCat.some((p) => p.type === t));
+  let active = types.includes(location.hash.slice(1)) ? location.hash.slice(1) : "all";
+
   const draw = () => {
-    let list = PRODUCTS.filter((p) => p.cat === key);
+    tabs.innerHTML = [["all", "全部", inCat.length], ...types.map((t) => [t, TYPES[t].name, inCat.filter((p) => p.type === t).length])]
+      .map(([t, label, n]) => `<button class="tab ${t === active ? "active" : ""}" data-type="${t}" aria-pressed="${t === active}">${label}<span>${n}</span></button>`)
+      .join("");
+    let list = active === "all" ? inCat : inCat.filter((p) => p.type === active);
     if (sortSel.value === "asc") list = [...list].sort((a, b) => a.price - b.price);
     if (sortSel.value === "desc") list = [...list].sort((a, b) => b.price - a.price);
     grid.innerHTML = list.map(productCard).join("");
-    document.querySelector("[data-count]").textContent = `共 ${list.length} 件商品`;
+    const label = active === "all" ? c.name : c.name + TYPES[active].name;
+    document.querySelector("[data-count]").textContent = `${label} · 共 ${list.length} 件商品`;
   };
+  tabs.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-type]");
+    if (!btn) return;
+    active = btn.dataset.type;
+    history.replaceState(null, "", active === "all" ? location.pathname : "#" + active);
+    draw();
+  });
   sortSel.addEventListener("change", draw);
   draw();
 }
