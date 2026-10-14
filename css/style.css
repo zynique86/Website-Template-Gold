@@ -674,10 +674,7 @@ h1, h2, h3 { font-family: var(--song); font-weight: 400; }
 .op-ink.s4 { opacity: 0; filter: blur(14px); transform: scale(1.08); }
 .ink-svg { position: relative; width: min(820px, 94vw); height: auto; overflow: visible; }
 /* 墨团：用一张预先模糊好的图层整体缩放与淡出，只走合成层，晕开过程更顺滑 */
-.ink-blot { position: absolute; left: 50%; top: 50%; width: min(760px, 120vw); aspect-ratio: 1.25; margin: calc(min(760px, 120vw) / -2.5) 0 0 calc(min(760px, 120vw) / -2); border-radius: 46% 54% 42% 58% / 55% 47% 53% 45%; background: radial-gradient(closest-side, rgba(29, 25, 21, .78), rgba(29, 25, 21, .55) 45%, rgba(29, 25, 21, .18) 75%, rgba(29, 25, 21, 0)); filter: blur(10px); transform: scale(.05); opacity: 0; will-change: transform, opacity; transition: transform 1.6s cubic-bezier(.15, .7, .25, 1), opacity .5s ease; }
-.op-ink.s1 .ink-blot { transform: scale(.75); opacity: 1; }
-.op-ink.s2 .ink-blot { transform: scale(1.05); opacity: .5; transition: transform 3.75s cubic-bezier(.2, .6, .3, 1), opacity 1.2s ease; }
-.op-ink.s3 .ink-blot { transform: scale(1.12); opacity: 0; transition: transform .6s ease-out, opacity .6s ease-out; }
+.ink-blot { position: absolute; left: 50%; top: 50%; width: min(820px, 130vw); aspect-ratio: 4 / 3; transform: translate(-50%, -50%); filter: blur(1.5px); pointer-events: none; }
 .ink-char { font-family: var(--brush); font-size: 150px; text-anchor: middle; fill: #1d1915; fill-opacity: 0; stroke: #1d1915; stroke-width: 2.5; stroke-opacity: 0; stroke-dasharray: 4000; stroke-dashoffset: 4000; }
 .op-ink.s2 .ink-char { transition: stroke-opacity 0s linear calc(var(--i) * .38s), stroke-dashoffset 1s ease-in-out calc(var(--i) * .38s); stroke-opacity: 1; stroke-dashoffset: 0; }
 .ink-fill { font-family: var(--brush); font-size: 150px; text-anchor: middle; fill: #1d1915; }
