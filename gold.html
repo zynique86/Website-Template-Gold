@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金饰 | 金玉良缘珠宝</title>
+  <meta name="description" content="足金、18K金手镯、项链、婚嫁金饰">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;600&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="gold">
+  <header data-header></header>
+  <main>
+    <section class="cat-hero" data-cat-hero></section>
+    <section class="spotlight" id="spotlight" data-spotlight></section>
+    <section class="section" id="products">
+      <div class="container">
+        <div class="type-tabs" data-types role="group" aria-label="按款式筛选"></div>
+        <div class="toolbar">
+          <span class="muted" data-count></span>
+          <label style="display:flex;align-items:center;gap:8px">排序
+            <select data-sort>
+              <option value="default">综合推荐</option>
+              <option value="asc">价格从低到高</option>
+              <option value="desc">价格从高到低</option>
+            </select>
+          </label>
+        </div>
+        <div class="grid" data-products></div>
+      </div>
+    </section>
+    <section class="section band guide" id="guide" data-guide></section>
+  </main>
+  <footer data-footer></footer>
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/jewel3d.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金玉良缘珠宝 | 翡翠 · 金饰 · 银饰 · 钻石</title>
+  <meta name="description" content="金玉良缘珠宝：精选翡翠、足金、纯银与钻石首饰，正品保证，满999包邮。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;600&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+  <script>
+    // 首页开场：默认水墨（ink），每次打开浏览器只播一次。
+    // 其他方案保留备用：地址加 #box / #gate / #scroll 可播放；要换默认，改下面的 "ink"。
+    window.INTRO = (function (def) {
+      var all = ["box", "gate", "ink", "scroll"], h = location.hash.slice(1);
+      if (all.indexOf(h) > -1) return h;
+      try { if (sessionStorage.getItem("introSeen")) return null; sessionStorage.setItem("introSeen", "1"); } catch (e) {}
+      return all.indexOf(def) > -1 ? def : null;
+    })("ink");
+    if (window.INTRO) document.documentElement.classList.add("intro-playing");
+  </script>
+  <header data-header></header>
+  <main>
+    <section class="hero">
+      <canvas class="fx-dust" aria-hidden="true"></canvas>
+      <div class="cn-decor" aria-hidden="true">
+        <span class="cloud cloud-1"></span>
+        <span class="cloud cloud-2"></span>
+        <span class="cloud cloud-3"></span>
+        <div class="lantern lantern-1"><i class="lantern-string"></i><div class="lantern-body"><b>福</b></div><i class="lantern-tassel"></i></div>
+        <div class="lantern lantern-2"><i class="lantern-string"></i><div class="lantern-body"><b>珍</b></div><i class="lantern-tassel"></i></div>
+        <p class="vertical-poem">金玉满堂<br>珠光宝气</p>
+      </div>
+      <div class="hero-gem" data-jewel3d="diamond" aria-hidden="true">
+        <div class="moon-gate"></div>
+        <div class="gem-glow"></div>
+        <div class="gem-floor"></div>
+        <svg class="gem-svg" viewBox="0 0 240 220">
+          <defs>
+            <linearGradient id="gf1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff8e1"/><stop offset=".5" stop-color="#e9d29a"/><stop offset="1" stop-color="#8a6a22"/></linearGradient>
+            <linearGradient id="gf2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf5"/><stop offset="1" stop-color="#b8913a"/></linearGradient>
+            <linearGradient id="gsheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <clipPath id="gclip"><polygon points="20,70 70,15 170,15 220,70 120,205"/></clipPath>
+          </defs>
+          <g class="gem-facets">
+            <polygon points="20,70 70,15 170,15 220,70 120,205" fill="url(#gf1)"/>
+            <polygon points="70,15 95,70 120,15" fill="url(#gf2)" opacity=".9"/>
+            <polygon points="120,15 145,70 170,15" fill="url(#gf2)" opacity=".7"/>
+            <polygon points="20,70 70,15 95,70" fill="#fff" opacity=".35"/>
+            <polygon points="145,70 170,15 220,70" fill="#8a6a22" opacity=".35"/>
+            <polygon points="95,70 120,15 145,70" fill="#fff" opacity=".55"/>
+            <polygon points="20,70 95,70 120,205" fill="#fff" opacity=".18"/>
+            <polygon points="95,70 145,70 120,205" fill="#fff" opacity=".35"/>
+            <polygon points="145,70 220,70 120,205" fill="#5a4417" opacity=".3"/>
+            <polyline points="20,70 220,70" stroke="#fff" stroke-opacity=".7" stroke-width="1.5" fill="none"/>
+          </g>
+          <rect class="gem-sweep" x="-120" y="0" width="80" height="220" fill="url(#gsheen)" clip-path="url(#gclip)" transform="skewX(-20)"/>
+        </svg>
+        <span class="twinkle" style="--x:30%;--y:36%;--d:0s"></span>
+        <span class="twinkle" style="--x:68%;--y:40%;--d:.8s"></span>
+        <span class="twinkle" style="--x:56%;--y:30%;--d:1.6s"></span>
+        <span class="twinkle" style="--x:44%;--y:58%;--d:2.3s"></span>
+      </div>
+      <div class="container hero-copy">
+        <div class="hero-seal" aria-label="金玉良缘印">
+          <span>金</span><span>玉</span><span>良</span><span>缘</span>
+        </div>
+        <p class="eyebrow">始于一九九八 · 匠心珠宝</p>
+        <h1><span class="reveal-line">金玉良缘</span><br><span class="reveal-line shimmer-text">珍藏每一刻光芒</span></h1>
+        <p>从温润翡翠到璀璨钻石，我们以二十余年匠心，为您甄选每一件值得传承的珠宝。</p>
+        <div class="actions">
+          <a class="btn" href="#categories">探索系列</a>
+          <a class="btn btn-ghost" href="diamond.html">求婚钻戒</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>GIA 国际认证钻石</span><span class="sep">❖</span><span>缅甸天然A货翡翠</span><span class="sep">❖</span><span>足金999 古法工艺</span><span class="sep">❖</span><span>S925 纯银</span><span class="sep">❖</span><span>满¥999 顺丰包邮</span><span class="sep">❖</span><span>终身免费清洗保养</span><span class="sep">❖</span>
+        <span>GIA 国际认证钻石</span><span class="sep">❖</span><span>缅甸天然A货翡翠</span><span class="sep">❖</span><span>足金999 古法工艺</span><span class="sep">❖</span><span>S925 纯银</span><span class="sep">❖</span><span>满¥999 顺丰包邮</span><span class="sep">❖</span><span>终身免费清洗保养</span><span class="sep">❖</span>
+      </div>
+    </div>
+
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-head">
+          <h2>珠宝系列</h2>
+          <p>五大品类，满足每一种心意</p>
+        </div>
+        <div class="cat-grid" data-categories></div>
+      </div>
+    </section>
+
+    <section class="section band">
+      <div class="container">
+        <div class="section-head">
+          <h2>热销推荐</h2>
+          <p>本季最受欢迎的珠宝</p>
+        </div>
+        <div class="grid" data-featured></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container promises">
+        <div class="promise"><div class="icon">真</div><h3>正品保证</h3><p>每件商品附权威鉴定证书</p></div>
+        <div class="promise"><div class="icon">匠</div><h3>匠心工艺</h3><p>资深工匠手工打磨镶嵌</p></div>
+        <div class="promise"><div class="icon">邮</div><h3>满999包邮</h3><p>顺丰保价，安全送达</p></div>
+        <div class="promise"><div class="icon">养</div><h3>7天无理由</h3><p>终身免费清洗保养</p></div>
+      </div>
+    </section>
+  </main>
+  <footer data-footer></footer>
+  <script src="js/intro.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/jewel3d.js"></script>
+</body>
+</html>
