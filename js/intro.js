@@ -37,12 +37,12 @@
       <div class="gate-beam"></div>
       <div class="gate-seal">${seal}</div>`,
     ink: `
+      <div class="ink-blot"></div>
       <svg class="ink-svg" viewBox="0 0 800 400" aria-hidden="true">
         <defs>
           <filter id="inkSpread" x="-50%" y="-50%" width="200%" height="200%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="3"/><feDisplacementMap in="SourceGraphic" scale="40"/><feGaussianBlur stdDeviation="6"/></filter>
           <filter id="inkBleed"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="28"/><feGaussianBlur stdDeviation="1.2"/></filter>
         </defs>
-        <circle class="ink-drop" cx="400" cy="200" r="60" filter="url(#inkBleed)"/>
         ${["金", "玉", "良", "缘"].map((ch, i) => {
           // 每个字两层：先描出笔画轮廓，再用一团不规则的墨从字中心慢慢晕开填满
           const x = 190 + i * 140;
@@ -50,14 +50,14 @@
           <mask id="inkMask${i}" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="400">
             <g filter="url(#inkSpread)">
               <circle cx="${x}" cy="195" r="0" fill="#fff">
-                <animate class="ink-anim" attributeName="r" from="0" to="120" dur="2.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".3 .1 .3 1" data-delay="${i * 450 + 700}"/>
+                <animate class="ink-anim" attributeName="r" from="0" to="120" dur="2s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".3 .1 .3 1" data-delay="${i * 350 + 600}"/>
               </circle>
             </g>
           </mask>
           <text class="ink-fill" x="${x}" y="245" mask="url(#inkMask${i})" filter="url(#inkSoft${i})">${ch}</text>
           <filter id="inkSoft${i}" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="5">
-              <animate class="ink-anim" attributeName="stdDeviation" from="6" to="0" dur="3s" begin="indefinite" fill="freeze" data-delay="${i * 450 + 900}"/>
+              <animate class="ink-anim" attributeName="stdDeviation" from="6" to="0" dur="2s" begin="indefinite" fill="freeze" data-delay="${i * 350 + 700}"/>
             </feGaussianBlur>
           </filter>
           <text class="ink-char" x="${x}" y="245" style="--i:${i}">${ch}</text>`;
@@ -131,9 +131,9 @@
       step("s2"); // 逐字书写，墨色随后慢慢晕开填满
       op.querySelectorAll(".ink-anim").forEach((a) => at(+a.dataset.delay, () => a.beginElement && a.beginElement()));
     });
-    at(5400, () => step("s3")); // 盖印
-    at(6200, () => { step("s4"); root.classList.remove("intro-playing"); }); // 墨色化开
-    at(7200, () => finish(false));
+    at(4100, () => step("s3")); // 盖印
+    at(5000, () => { step("s4"); root.classList.remove("intro-playing"); }); // 墨色化开
+    at(6000, () => finish(false));
   } else if (variant === "scroll") {
     at(100, () => step("s1")); // 卷轴落下
     at(1000, () => { step("s2"); root.classList.remove("intro-playing"); }); // 向两侧展开

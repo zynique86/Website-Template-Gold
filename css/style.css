@@ -672,15 +672,16 @@ h1, h2, h3 { font-family: var(--song); font-weight: 400; }
 /* —— 方案三：水墨书写 —— */
 .op-ink { background: #f3ecdc var(--paper-grain); display: grid; place-items: center; transition: opacity 1s, filter 1s, transform 1s; }
 .op-ink.s4 { opacity: 0; filter: blur(14px); transform: scale(1.08); }
-.ink-svg { width: min(820px, 94vw); height: auto; overflow: visible; }
-.ink-drop { fill: #1d1915; transform-box: fill-box; transform-origin: center; transform: scale(0); opacity: .9; transition: transform 1s cubic-bezier(.2, .7, .2, 1), opacity 1.2s; }
-.op-ink.s1 .ink-drop { transform: scale(2.6); }
-.op-ink.s2 .ink-drop { opacity: .08; transform: scale(4.2); }
+.ink-svg { position: relative; width: min(820px, 94vw); height: auto; overflow: visible; }
+/* 墨团：用一张预先模糊好的图层整体缩放与淡出，只走合成层，晕开过程更顺滑 */
+.ink-blot { position: absolute; left: 50%; top: 50%; width: min(760px, 120vw); aspect-ratio: 1.25; margin: calc(min(760px, 120vw) / -2.5) 0 0 calc(min(760px, 120vw) / -2); border-radius: 46% 54% 42% 58% / 55% 47% 53% 45%; background: radial-gradient(closest-side, rgba(29, 25, 21, .78), rgba(29, 25, 21, .55) 45%, rgba(29, 25, 21, .18) 75%, rgba(29, 25, 21, 0)); filter: blur(10px); transform: scale(.05); opacity: 0; will-change: transform, opacity; transition: transform 1.6s cubic-bezier(.15, .7, .25, 1), opacity .5s ease; }
+.op-ink.s1 .ink-blot { transform: scale(.75); opacity: 1; }
+.op-ink.s2 .ink-blot { transform: scale(1.05); opacity: .14; transition: transform 2.4s cubic-bezier(.2, .6, .3, 1), opacity 2s ease .1s; }
 .ink-char { font-family: var(--brush); font-size: 150px; text-anchor: middle; fill: #1d1915; fill-opacity: 0; stroke: #1d1915; stroke-width: 2.5; stroke-opacity: 0; stroke-dasharray: 4000; stroke-dashoffset: 4000; }
 .op-ink.s2 .ink-char { transition: stroke-opacity 0s linear calc(var(--i) * .38s), stroke-dashoffset 1s ease-in-out calc(var(--i) * .38s); stroke-opacity: 1; stroke-dashoffset: 0; }
 .ink-fill { font-family: var(--brush); font-size: 150px; text-anchor: middle; fill: #1d1915; }
 .ink-seal { position: absolute; left: 50%; top: 50%; transform: translate(calc(min(820px, 94vw) / 2 - 40px), 70px) scale(1.2); opacity: 0; }
-.op-ink.s3 .ink-seal { animation: inkStamp .5s cubic-bezier(.3, 1.6, .5, 1) forwards; }
+.op-ink.s3 .ink-seal { animation: inkStamp .35s cubic-bezier(.3, 1.6, .5, 1) forwards; }
 @keyframes inkStamp { from { opacity: 0; transform: translate(calc(min(820px, 94vw) / 2 - 40px), 70px) scale(3); } to { opacity: 1; transform: translate(calc(min(820px, 94vw) / 2 - 40px), 70px) scale(1.2); } }
 .ink-wash { display: none; }
 
