@@ -456,3 +456,135 @@ h1, h2, h3 { font-family: var(--song); font-weight: 400; }
   .cloud-2 { display: none; }
   .cat-hero .cn-seal { width: 72px; height: 72px; font-size: 38px; right: 16px; top: 24px; transform: rotate(-6deg); }
 }
+
+/* ============ 分类页改版：每个材质一套主题 ============ */
+.cat-hero { padding: 0; min-height: 560px; display: flex; align-items: center; --hero-fg: #f4ead2; --hero-soft: #e2d7bf; --hero-accent: var(--gold-light); --frame: linear-gradient(135deg, #f3dc8f, #8a6a22); --window-bg: radial-gradient(circle at 50% 45%, #3a1410, #12080a); color: var(--hero-fg); }
+.cat-hero .cat-scene { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.cat-hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: 40px; padding-block: 64px; }
+.cat-hero-copy { min-width: 0; }
+.cat-hero .crumbs { color: var(--hero-soft); }
+.cat-title { display: flex; align-items: center; gap: 18px; }
+.cat-seal { flex: none; width: 64px; height: 64px; display: grid; place-items: center; background: var(--cinnabar); color: #f8e7d2; font-family: var(--brush); font-size: 38px; border-radius: 6px; box-shadow: inset 0 0 0 2px #f8e7d2, inset 0 0 0 5px var(--cinnabar), 0 8px 20px rgba(0, 0, 0, .25); rotate: -6deg; animation: stamp .6s .4s cubic-bezier(.3, 1.6, .5, 1) both; }
+.cat-hero h1 { font-family: var(--brush); font-weight: 400; font-size: clamp(56px, 8vw, 96px); color: var(--hero-fg); margin: 0; line-height: 1; letter-spacing: .06em; }
+.cat-hero h1 small { display: block; font-family: var(--song); font-size: 14px; letter-spacing: .6em; margin: 10px 0 0 4px; color: var(--hero-accent); opacity: 1; }
+.cat-hero .lead { font-family: var(--song); font-size: 24px; color: var(--hero-accent); margin: 22px 0 10px; }
+.cat-hero .cat-intro { color: var(--hero-soft); max-width: 520px; }
+.cat-stats { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.cat-stats li { padding: 6px 14px; border: 1px solid color-mix(in srgb, var(--hero-accent) 55%, transparent); border-radius: 3px; font-size: 13px; color: var(--hero-fg); background: color-mix(in srgb, var(--hero-accent) 8%, transparent); }
+.cat-stats strong { font-family: var(--song); font-size: 18px; color: var(--hero-accent); margin-right: 3px; font-weight: 400; }
+.cat-actions { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+.cat-hero .btn-ghost { color: var(--hero-fg); border-color: color-mix(in srgb, var(--hero-fg) 60%, transparent); }
+.cat-hero > .container > p:not(.lead):not(.crumbs):not(.cat-intro):not(.cat-poem) { display: none; }
+
+/* 古典窗框：月洞门 / 拱门 / 六角窗 / 八角窗 */
+.cat-window { justify-self: start; position: relative; width: min(440px, 100%); aspect-ratio: 1; padding: 12px; background: var(--frame); filter: drop-shadow(0 24px 40px rgba(0, 0, 0, .3)); animation: windowIn 1s .2s cubic-bezier(.2, .7, .2, 1) both; }
+.cat-window-inner { position: relative; width: 100%; height: 100%; overflow: hidden; background: repeating-linear-gradient(0deg, transparent 0 30px, rgba(255, 230, 170, .1) 30px 32px), repeating-linear-gradient(90deg, transparent 0 30px, rgba(255, 230, 170, .1) 30px 32px), var(--window-bg); }
+.cat-window-inner::after { content: ""; position: absolute; inset: 14px; border: 1px dashed rgba(255, 230, 170, .35); border-radius: inherit; clip-path: inherit; pointer-events: none; }
+.frame-moon, .frame-moon .cat-window-inner { border-radius: 50%; }
+.frame-arch, .frame-arch .cat-window-inner { border-radius: 50% 50% 10px 10px / 42% 42% 10px 10px; }
+.frame-hex, .frame-hex .cat-window-inner { clip-path: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0 50%); }
+.frame-octagon, .frame-octagon .cat-window-inner { clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); }
+.cat-window-art { position: absolute; inset: 22%; display: grid; place-items: center; }
+.cat-jewel { position: absolute; inset: 0; z-index: 1; }
+.cat-jewel canvas { width: 100% !important; height: 100% !important; }
+.cat-window:has(.cat-jewel.is-3d) .cat-window-art { display: none; }
+@keyframes windowIn { from { opacity: 0; transform: scale(.85) rotate(-4deg); } to { opacity: 1; transform: none; } }
+.cat-poem { position: absolute; right: 0; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; margin: 0; font-family: var(--brush); font-size: 26px; letter-spacing: .3em; line-height: 1.7; color: var(--hero-accent); opacity: .7; }
+
+/* 翡翠：水墨山水 */
+.cat-hero.theme-jade { background: linear-gradient(180deg, #eef3ea, #d9e6d6) , var(--paper); background-image: var(--paper-grain), linear-gradient(180deg, #f1f5ec 0%, #d6e4d2 100%); --hero-fg: #17352a; --hero-soft: #3d5a4c; --hero-accent: #2f7d4f; --frame: linear-gradient(135deg, #7cc79a, #1f5a3b); --window-bg: radial-gradient(circle at 50% 42%, #ffffff 0%, #e4efe6 45%, #b9d3bf 100%); }
+.theme-jade .cat-window-inner { background: radial-gradient(circle at 50% 42%, #ffffff 0%, #e4efe6 45%, #b9d3bf 100%); }
+.theme-jade .cat-window-inner::after { border-color: rgba(31, 90, 59, .35); }
+.ink-mountains { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 70%; }
+.ink-sun { position: absolute; left: 38%; top: 12%; width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle, rgba(168, 50, 42, .55), rgba(168, 50, 42, .15) 60%, transparent 72%); }
+.theme-jade .cloud { filter: hue-rotate(80deg) saturate(.6) brightness(.6); opacity: .35; }
+
+/* 金饰：宫廷朱红 + 旋转金芒 */
+.cat-hero.theme-gold { background: radial-gradient(circle at 72% 50%, #8a2418 0%, #5a140e 40%, #2a0a07 85%); --hero-accent: #f3d27a; }
+.theme-gold .cat-window-inner { background: radial-gradient(circle at 50% 40%, #5a1a10, #1d0806); }
+.gold-rays { position: absolute; right: -10%; top: 50%; width: 1100px; height: 1100px; margin-top: -550px; background: repeating-conic-gradient(from 0deg, rgba(255, 210, 120, .09) 0deg 5deg, transparent 5deg 12deg); border-radius: 50%; mask: radial-gradient(circle, #000 20%, transparent 65%); -webkit-mask: radial-gradient(circle, #000 20%, transparent 65%); animation: spin 80s linear infinite; }
+
+/* 银饰：青花瓷 + 明月 */
+.cat-hero.theme-silver { background: linear-gradient(160deg, #f7f9fc 0%, #dfe7f1 100%); --hero-fg: #1b2c52; --hero-soft: #42557d; --hero-accent: #2b4c8c; --frame: linear-gradient(135deg, #ffffff, #8ea2c0 50%, #2b4c8c); }
+.theme-silver .cat-window-inner { background: radial-gradient(circle at 50% 40%, #ffffff 0%, #e8eef6 50%, #b8c7dc 100%); }
+.theme-silver .cat-window-inner::after { border-color: rgba(43, 76, 140, .35); }
+.porcelain { position: absolute; inset: 0; opacity: .14; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%232b4c8c' stroke-width='2'%3E%3Ccircle cx='60' cy='60' r='26'/%3E%3Ccircle cx='60' cy='60' r='16'/%3E%3Cpath d='M60 34c-8-12-22-14-30-6M60 86c8 12 22 14 30 6M34 60c-12 8-14 22-6 30M86 60c12-8 14-22 6-30'/%3E%3Cpath d='M0 0c14 6 20 20 14 34M120 120c-14-6-20-20-14-34M120 0c-6 14-20 20-34 14M0 120c6-14 20-20 34-14'/%3E%3Ccircle cx='60' cy='60' r='4' fill='%232b4c8c'/%3E%3C/g%3E%3C/svg%3E"); background-size: 120px; mask: linear-gradient(90deg, #000 0%, transparent 55%); -webkit-mask: linear-gradient(90deg, transparent 0%, #000 60%); }
+.moon-disc { position: absolute; left: 6%; bottom: -120px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #ffffff, #dfe7f1 60%, transparent 70%); opacity: .9; }
+
+/* 钻石：深蓝星空 */
+.cat-hero.theme-diamond { background: radial-gradient(circle at 70% 45%, #233a66 0%, #0f1a33 45%, #060a16 90%); --hero-accent: #bcd6ff; --hero-soft: #c4cfe4; --frame: linear-gradient(135deg, #ffffff, #9fb6d8 45%, #3b5a8c); }
+.theme-diamond .cat-window-inner { background: radial-gradient(circle at 50% 40%, #1d2f55, #060a16); }
+.star-field { position: absolute; inset: 0; background-image: radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent), radial-gradient(1px 1px at 30% 70%, #fff, transparent), radial-gradient(1.5px 1.5px at 55% 15%, #dbe8ff, transparent), radial-gradient(1px 1px at 80% 60%, #fff, transparent), radial-gradient(2px 2px at 90% 25%, #fff, transparent), radial-gradient(1px 1px at 45% 85%, #cfe0ff, transparent), radial-gradient(1.5px 1.5px at 20% 50%, #fff, transparent); background-size: 300px 300px; animation: twinkleField 4s ease-in-out infinite alternate; }
+@keyframes twinkleField { from { opacity: .5; } to { opacity: 1; } }
+
+.cat-hero::after { z-index: 2; }
+.theme-jade::after { background-image: var(--fret-red); opacity: .5; }
+.theme-silver::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='14' viewBox='0 0 24 14'%3E%3Cpath d='M0 13H11V1H3V9H8V5' fill='none' stroke='%232b4c8c' stroke-width='1.6'/%3E%3Cpath d='M12 1H23V13H15V5H20V9' fill='none' stroke='%232b4c8c' stroke-width='1.6'/%3E%3C/svg%3E"); opacity: .5; }
+
+/* 镇店之宝 */
+.spotlight { padding-block: 80px 20px; }
+.spotlight-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
+.spotlight-art { position: relative; aspect-ratio: 1; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, #fffaf0, #ecdcbc); border-radius: 6px; overflow: hidden; box-shadow: inset 0 0 0 10px #fff, inset 0 0 0 11px rgba(184, 145, 58, .5), var(--shadow); }
+.spotlight-art svg { width: 62%; position: relative; z-index: 1; filter: drop-shadow(0 18px 24px rgba(60, 45, 15, .25)); animation: float 6s ease-in-out infinite; }
+.spotlight-rays { position: absolute; inset: -30%; background: repeating-conic-gradient(rgba(184, 145, 58, .1) 0deg 6deg, transparent 6deg 14deg); animation: spin 60s linear infinite; }
+.spotlight-seal { position: absolute; right: 22px; bottom: 22px; z-index: 2; width: 54px; height: 54px; display: grid; place-items: center; background: var(--cinnabar); color: #f8e7d2; font-family: var(--brush); font-size: 30px; border-radius: 4px; box-shadow: inset 0 0 0 2px #f8e7d2, inset 0 0 0 4px var(--cinnabar); rotate: 8deg; }
+.eyebrow-cn { font-family: var(--song); color: var(--cinnabar); letter-spacing: .4em; margin: 0 0 8px; }
+.spotlight-copy h2 { font-family: var(--brush); font-weight: 400; font-size: clamp(34px, 4vw, 48px); margin: 0 0 16px; }
+.spotlight-story { color: var(--ink-soft); font-size: 16px; max-width: 34em; }
+.spec-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin: 24px 0; border-top: 1px solid var(--line); }
+.spec-list div { padding: 12px 4px; border-bottom: 1px solid var(--line); }
+.spec-list dt { font-size: 12px; color: var(--ink-soft); letter-spacing: .2em; }
+.spec-list dd { margin: 2px 0 0; font-family: var(--song); font-size: 17px; }
+.spotlight-buy { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.spotlight-buy .price { font-size: 32px; margin-right: 8px; }
+.spotlight-buy .btn-ghost { color: var(--ink); border-color: var(--ink); }
+
+/* 选购指南：卷轴卡片 */
+.scroll-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+.scroll-card { position: relative; background: #fbf6ea var(--paper-grain); padding: 44px 22px 36px; text-align: center; border-left: 1px solid rgba(184, 145, 58, .35); border-right: 1px solid rgba(184, 145, 58, .35); box-shadow: 0 10px 24px rgba(60, 45, 15, .08); transition: transform .3s; }
+.scroll-card::before, .scroll-card::after { content: ""; position: absolute; left: -10px; right: -10px; height: 14px; border-radius: 7px; background: linear-gradient(180deg, #8a5a2b, #4a2d14 60%, #6b4320); box-shadow: 0 3px 6px rgba(0, 0, 0, .25); }
+.scroll-card::before { top: -7px; }
+.scroll-card::after { bottom: -7px; }
+.scroll-card:hover { transform: translateY(-6px); }
+.scroll-char { display: inline-grid; place-items: center; width: 64px; height: 64px; font-family: var(--brush); font-size: 40px; color: var(--cinnabar); border: 2px solid var(--cinnabar); border-radius: 50%; margin-bottom: 12px; }
+.scroll-card h3 { font-family: var(--song); font-size: 20px; margin: 0 0 8px; }
+.scroll-card p { color: var(--ink-soft); font-size: 14px; margin: 0; text-align: left; }
+
+/* 快速查看 */
+.card-art { cursor: zoom-in; }
+.qv-hint { position: absolute; left: 50%; bottom: 14px; z-index: 3; transform: translate(-50%, 8px); opacity: 0; background: rgba(31, 26, 20, .82); color: var(--gold-light); font-size: 12px; letter-spacing: .2em; padding: 4px 14px; border-radius: 3px; transition: all .25s; }
+.card:hover .qv-hint, .card-art:focus-visible .qv-hint { opacity: 1; transform: translate(-50%, 0); }
+.card-art:focus-visible { outline: 2px solid var(--gold); outline-offset: -4px; }
+.quick-view { border: 0; padding: 0; width: min(820px, calc(100% - 32px)); max-height: calc(100% - 32px); border-radius: 8px; background: var(--paper) var(--paper-grain); box-shadow: 0 30px 80px rgba(0, 0, 0, .4); }
+.quick-view[open] { animation: rise .4s cubic-bezier(.2, .7, .2, 1); }
+.quick-view::backdrop { background: rgba(20, 12, 8, .6); backdrop-filter: blur(4px); }
+.qv-inner { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.qv-art { background: radial-gradient(circle at 50% 45%, #fffaf0, #ecdcbc); display: grid; place-items: center; padding: 48px; }
+.qv-art svg { width: 100%; filter: drop-shadow(0 14px 20px rgba(60, 45, 15, .25)); }
+.qv-copy { padding: 40px 32px; }
+.qv-copy h2 { font-family: var(--brush); font-weight: 400; font-size: 34px; margin: 6px 0 12px; }
+.qv-copy p { color: var(--ink-soft); }
+.qv-copy .price { font-size: 30px; margin: 16px 0 0; }
+.qv-promise { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 6px; font-size: 14px; }
+.qv-promise li::before { content: "❖"; color: var(--cinnabar); margin-right: 8px; }
+.qv-close { position: absolute; right: 12px; top: 8px; z-index: 2; border: 0; background: none; font-size: 30px; line-height: 1; cursor: pointer; color: var(--ink); }
+
+@media (max-width: 960px) {
+  .cat-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+  .cat-window { width: min(340px, 100%); justify-self: center; }
+  .cat-poem { display: none; }
+  .spotlight-inner { grid-template-columns: 1fr; gap: 28px; }
+  .scroll-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .cat-hero { min-height: 0; }
+  .cat-hero .cn-seal { display: none; }
+  .qv-inner { grid-template-columns: 1fr; }
+  .qv-art { padding: 28px 64px; }
+  .qv-copy { padding: 24px; }
+}
+@media (max-width: 480px) {
+  .scroll-grid { grid-template-columns: 1fr; }
+  .spec-list { grid-template-columns: 1fr; }
+}
+.theme-jade .cat-poem, .theme-silver .cat-poem { opacity: .9; }

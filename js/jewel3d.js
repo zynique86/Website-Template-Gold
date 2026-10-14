@@ -1,7 +1,8 @@
-// 首页横幅：3D 旋转钻石（明亮式切工，Three.js 渲染）
-(() => {
-  const host = document.querySelector("[data-diamond3d]");
-  if (!host || !window.THREE) return;
+// 3D 旋转珠宝（Three.js 渲染）：钻石、翡翠手镯、金戒指、银手镯
+// 用法：<div data-jewel3d="diamond|jade|gold|silver"></div>
+function mountJewel3D(host) {
+  if (!host || !window.THREE || host.classList.contains("is-3d")) return;
+  const kind = host.dataset.jewel3d || "diamond";
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   let renderer;
@@ -23,6 +24,7 @@
   camera.lookAt(0, 0, 0);
 
   /* ---------- 钻石几何：台面 + 冠部 + 腰棱 + 亭部 ---------- */
+  function brilliantGeometry() {
   function ring(n, r, y, offset = 0) {
     return Array.from({ length: n }, (_, i) => {
       const a = ((i + offset) / n) * Math.PI * 2;
@@ -78,6 +80,8 @@
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
   geo.computeVertexNormals();
+  return geo;
+  }
 
   /* ---------- 环境贴图：明暗交错的“珠宝柜灯光”，让切面闪烁 ---------- */
   function envFace(seed) {
@@ -113,22 +117,58 @@
   scene.environment = env;
 
   const diamond = new THREE.Group();
-  const body = new THREE.Mesh(
-    geo,
-    new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 1, roughness: 0.04, envMap: env, envMapIntensity: 2.2, flatShading: true })
-  );
-  // 色散“火彩”：按切面朝向叠加彩虹色，旋转时不断变化
-  const fire = new THREE.Mesh(
-    geo,
-    new THREE.MeshNormalMaterial({ flatShading: true, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending, depthWrite: false })
-  );
-  // 棱线
-  const edges = new THREE.LineSegments(
-    new THREE.EdgesGeometry(geo, 1),
-    new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 })
-  );
-  diamond.add(body, fire, edges);
-  diamond.rotation.x = 0.4;
+  const geo = brilliantGeometry();
+  const stone = (scale = 1) => {
+    const g = new THREE.Group();
+    g.add(
+      new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 1, roughness: 0.04, envMap: env, envMapIntensity: 2.2, flatShading: true })),
+      // 色散“火彩”：按切面朝向叠加彩虹色，旋转时不断变化
+      new THREE.Mesh(geo, new THREE.MeshNormalMaterial({ flatShading: true, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending, depthWrite: false })),
+      // 棱线
+      new THREE.LineSegments(new THREE.EdgesGeometry(geo, 1), new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 }))
+    );
+    g.scale.setScalar(scale);
+    return g;
+  };
+  const metal = (color, roughness) => new THREE.MeshStandardMaterial({ color, metalness: 1, roughness, envMap: env, envMapIntensity: 1.6 });
+
+  let baseTilt = 0.4;
+  if (kind === "jade") {
+    // 翡翠手镯：通透绿色，带内部光晕
+    const bangle = new THREE.Mesh(
+      new THREE.TorusGeometry(1.05, 0.26, 48, 160),
+      new THREE.MeshPhysicalMaterial({ color: 0x2f9e5f, emissive: 0x0d3d22, emissiveIntensity: 0.6, metalness: 0, roughness: 0.12, clearcoat: 1, clearcoatRoughness: 0.05, envMap: env, envMapIntensity: 1.3, transparent: true, opacity: 0.93 })
+    );
+    diamond.add(bangle);
+    baseTilt = 1.0;
+  } else if (kind === "gold") {
+    // 足金戒指：戒圈 + 主钻
+    const band = new THREE.Mesh(new THREE.TorusGeometry(0.95, 0.13, 40, 160), metal(0xf5c451, 0.16));
+    const gem = stone(0.42);
+    gem.position.y = 1.18;
+    const setting = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.12, 0.22, 24), metal(0xf5c451, 0.2));
+    setting.position.y = 1.05;
+    diamond.add(band, setting, gem);
+    diamond.scale.setScalar(0.95);
+    diamond.position.y = -0.15;
+    baseTilt = 0.15;
+  } else if (kind === "silver") {
+    // 纯银开口手镯：两端各有一颗银珠
+    const arc = Math.PI * 1.7;
+    const cuff = new THREE.Mesh(new THREE.TorusGeometry(1.05, 0.11, 32, 160, arc), metal(0xe9eef3, 0.12));
+    cuff.rotation.z = (Math.PI * 2 - arc) / 2 + Math.PI / 2;
+    const ball = (a) => {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.19, 32, 24), metal(0xe9eef3, 0.08));
+      const ang = a + cuff.rotation.z;
+      m.position.set(Math.cos(ang) * 1.05, Math.sin(ang) * 1.05, 0);
+      return m;
+    };
+    diamond.add(cuff, ball(0), ball(arc));
+    baseTilt = 0.9;
+  } else {
+    diamond.add(stone(1));
+  }
+  diamond.rotation.x = baseTilt;
   scene.add(diamond);
 
   // 环绕的彩色点光源，制造跳动的高光
@@ -149,15 +189,15 @@
   resize();
 
   // 鼠标影响倾角
-  let targetTilt = 0.4, targetLean = 0;
-  const hero = host.closest(".hero");
+  let targetTilt = baseTilt, targetLean = 0;
+  const hero = host.closest(".hero, .cat-hero");
   if (hero) {
     hero.addEventListener("pointermove", (e) => {
       const r = hero.getBoundingClientRect();
-      targetTilt = 0.4 + ((e.clientY - r.top) / r.height - 0.5) * 0.5;
+      targetTilt = baseTilt + ((e.clientY - r.top) / r.height - 0.5) * 0.5;
       targetLean = ((e.clientX - r.left) / r.width - 0.5) * 0.4;
     });
-    hero.addEventListener("pointerleave", () => { targetTilt = 0.4; targetLean = 0; });
+    hero.addEventListener("pointerleave", () => { targetTilt = baseTilt; targetLean = 0; });
   }
 
   // 只在横幅可见时渲染，节省电量
@@ -173,7 +213,7 @@
       diamond.rotation.y = t * 0.6;
       diamond.rotation.x += (targetTilt - diamond.rotation.x) * 0.05;
       diamond.rotation.z += (targetLean - diamond.rotation.z) * 0.05;
-      diamond.position.y = Math.sin(t * 1.2) * 0.08;
+      diamond.position.y = (kind === "gold" ? -0.15 : 0) + Math.sin(t * 1.2) * 0.08;
       lights.forEach(({ l, phase }) => {
         const a = t * 0.9 + phase;
         l.position.set(Math.cos(a) * 3, 1.5 + Math.sin(a * 1.3) * 1.2, Math.sin(a) * 3);
@@ -183,4 +223,8 @@
     if (!reduceMotion) requestAnimationFrame(tick);
   }
   tick();
-})();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-jewel3d]").forEach(mountJewel3D);
+});

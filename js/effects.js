@@ -245,18 +245,12 @@
     if (heroCanvas) goldDust(heroCanvas, { count: 90 });
 
     const catHero = document.querySelector(".cat-hero");
-    if (catHero) {
+    if (catHero && ["gold", "diamond"].includes(document.body.dataset.page)) {
       const c = document.createElement("canvas");
       c.className = "fx-dust";
       c.setAttribute("aria-hidden", "true");
       catHero.prepend(c);
-      // 中国风装饰：祥云与材质印章
-      const seals = { jade: "翠", gold: "金", silver: "银", diamond: "钻" };
-      catHero.insertAdjacentHTML(
-        "beforeend",
-        `<span class="cloud cloud-1" aria-hidden="true"></span><span class="cloud cloud-3" aria-hidden="true"></span><div class="cn-seal" aria-hidden="true">${seals[document.body.dataset.page] || "宝"}</div>`
-      );
-      const hues = { jade: 140, gold: 44, silver: 210, diamond: 205 };
+      const hues = { gold: 44, diamond: 210 };
       goldDust(c, { count: 50, hue: hues[document.body.dataset.page] });
     }
 

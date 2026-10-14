@@ -82,7 +82,7 @@ function showToast(msg) {
 /* ---------- 商品插画（纯SVG，无需外部图片） ---------- */
 function productArt(p) {
   const [c1, c2] = CATEGORIES[p.cat].colors;
-  const gid = "g" + p.id;
+  const gid = "g" + p.id + "-" + (productArt.n = (productArt.n || 0) + 1);
   const grad = `<defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c2}"/><stop offset="1" stop-color="${c1}"/></linearGradient></defs>`;
   const shapes = {
     ring: `<circle cx="100" cy="112" r="44" fill="none" stroke="url(#${gid})" stroke-width="12"/><circle cx="100" cy="62" r="16" fill="url(#${gid})"/>`,
@@ -99,7 +99,7 @@ function productArt(p) {
 function productCard(p) {
   return `
     <article class="card">
-      <div class="card-art">${productArt(p)}${p.tag ? `<span class="badge">${p.tag}</span>` : ""}</div>
+      <div class="card-art" data-quick="${p.id}" role="button" tabindex="0" aria-label="快速查看 ${escapeHtml(p.name)}">${productArt(p)}<span class="qv-hint">快速查看</span>${p.tag ? `<span class="badge">${p.tag}</span>` : ""}</div>
       <div class="card-body">
         <p class="card-cat">${CATEGORIES[p.cat].name} · ${TYPES[p.type].name}</p>
         <h3>${escapeHtml(p.name)}</h3>
@@ -193,16 +193,86 @@ function renderHome() {
 function renderCategory(key) {
   const c = CATEGORIES[key];
   document.title = `${c.name} | 金玉良缘珠宝`;
+  const th = CATEGORY_THEMES[key];
+  const inCatAll = PRODUCTS.filter((p) => p.cat === key);
+  const typeCount = new Set(inCatAll.map((p) => p.type)).size;
+
+  /* 横幅：左文案 + 右侧古典窗框中的 3D 珠宝 */
   const hero = document.querySelector("[data-cat-hero]");
-  hero.style.setProperty("--c1", c.colors[0]);
-  hero.style.setProperty("--c2", c.colors[1]);
+  hero.classList.add(`theme-${key}`);
   hero.innerHTML = `
-    <div class="container">
-      <p class="crumbs"><a href="index.html">首页</a> / ${c.name}</p>
-      <h1>${c.name}<small>${c.en}</small></h1>
-      <p class="lead">${c.tagline}</p>
-      <p>${c.intro}</p>
+    <div class="cat-scene" aria-hidden="true">${sceneDecor(key)}</div>
+    <div class="container cat-hero-inner">
+      <div class="cat-hero-copy">
+        <p class="crumbs"><a href="index.html">首页</a> / ${c.name}</p>
+        <div class="cat-title">
+          <span class="cat-seal" aria-hidden="true">${th.seal}</span>
+          <h1>${c.name}<small>${c.en}</small></h1>
+        </div>
+        <p class="lead">${c.tagline}</p>
+        <p class="cat-intro">${c.intro}</p>
+        <ul class="cat-stats">
+          <li><strong>${inCatAll.length}</strong>款在售</li>
+          <li><strong>${typeCount}</strong>种款式</li>
+          ${th.stats.map((s) => `<li>${s}</li>`).join("")}
+        </ul>
+        <div class="cat-actions">
+          <a class="btn" href="#spotlight">镇店之宝</a>
+          <a class="btn btn-ghost" href="#guide">选购指南</a>
+        </div>
+      </div>
+      <div class="cat-window frame-${th.frame}" aria-hidden="true">
+        <div class="cat-window-inner">
+          <div class="cat-window-art">${productArt(findProduct(th.spotlight))}</div>
+          <div class="cat-jewel" data-jewel3d="${key}"></div>
+        </div>
+      </div>
+      <p class="cat-poem" aria-hidden="true">${th.poem.join("<br>")}</p>
     </div>`;
+
+  /* 镇店之宝 */
+  const spot = document.querySelector("[data-spotlight]");
+  const sp = findProduct(th.spotlight);
+  if (spot && sp) {
+    spot.innerHTML = `
+      <div class="container spotlight-inner">
+        <div class="spotlight-art">
+          <div class="spotlight-rays" aria-hidden="true"></div>
+          ${productArt(sp)}
+          <span class="spotlight-seal" aria-hidden="true">珍</span>
+        </div>
+        <div class="spotlight-copy">
+          <p class="eyebrow-cn">镇店之宝 · ${c.name}</p>
+          <h2>${escapeHtml(sp.name)}</h2>
+          <p class="spotlight-story">${th.story}</p>
+          <dl class="spec-list">${th.specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+          <div class="spotlight-buy">
+            <span class="price">${formatPrice(sp.price)}</span>
+            <button class="btn" data-add="${sp.id}">加入购物车</button>
+            <button class="btn btn-ghost" data-jump-type="${sp.type}">查看同款${TYPES[sp.type].name}</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  /* 选购指南：卷轴卡片 */
+  const guide = document.querySelector("[data-guide]");
+  if (guide) {
+    guide.innerHTML = `
+      <div class="container">
+        <div class="section-head"><h2>${c.name}选购指南</h2><p>懂行再出手，买得放心</p></div>
+        <div class="scroll-grid">
+          ${th.guide
+            .map(([ch, t, d]) => `
+            <article class="scroll-card">
+              <span class="scroll-char">${ch}</span>
+              <h3>${t}</h3>
+              <p>${d}</p>
+            </article>`)
+            .join("")}
+        </div>
+      </div>`;
+  }
 
   const grid = document.querySelector("[data-products]");
   const sortSel = document.querySelector("[data-sort]");
@@ -231,7 +301,61 @@ function renderCategory(key) {
     draw();
   });
   sortSel.addEventListener("change", draw);
+  document.addEventListener("click", (e) => {
+    const j = e.target.closest("[data-jump-type]");
+    if (!j) return;
+    active = j.dataset.jumpType;
+    history.replaceState(null, "", "#" + active);
+    draw();
+    tabs.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
   draw();
+}
+
+/* 分类页横幅背景装饰：翡翠山水、金饰光芒、银饰青花、钻石星空 */
+function sceneDecor(key) {
+  if (key === "jade") {
+    return `
+      <svg class="ink-mountains" viewBox="0 0 1440 360" preserveAspectRatio="none">
+        <path d="M0 360V210C120 150 190 90 300 140S470 60 560 120S760 40 880 110S1080 70 1200 130S1360 100 1440 150V360Z" fill="#2f6b4c" opacity=".16"/>
+        <path d="M0 360V260C140 200 230 170 340 220S520 150 640 210S840 160 960 220S1180 180 1300 230S1400 220 1440 240V360Z" fill="#1f4d36" opacity=".22"/>
+        <path d="M0 360V310C160 270 260 260 400 290S640 250 780 290S1040 260 1180 300S1380 290 1440 300V360Z" fill="#163a29" opacity=".3"/>
+      </svg>
+      <span class="ink-sun"></span>
+      <span class="cloud cloud-1"></span><span class="cloud cloud-3"></span>`;
+  }
+  if (key === "gold") return `<span class="gold-rays"></span><span class="cloud cloud-1"></span><span class="cloud cloud-3"></span>`;
+  if (key === "silver") return `<span class="porcelain"></span><span class="moon-disc"></span>`;
+  return `<span class="star-field"></span>`;
+}
+
+/* ---------- 商品快速查看 ---------- */
+function openQuickView(id) {
+  const p = findProduct(id);
+  if (!p) return;
+  let dlg = document.querySelector(".quick-view");
+  if (!dlg) {
+    dlg = document.createElement("dialog");
+    dlg.className = "quick-view";
+    document.body.appendChild(dlg);
+    dlg.addEventListener("click", (e) => {
+      if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
+    });
+  }
+  dlg.innerHTML = `
+    <div class="qv-inner">
+      <button class="qv-close" data-close aria-label="关闭">×</button>
+      <div class="qv-art">${productArt(p)}</div>
+      <div class="qv-copy">
+        <p class="card-cat">${CATEGORIES[p.cat].name} · ${TYPES[p.type].name}</p>
+        <h2>${escapeHtml(p.name)}</h2>
+        <p>${escapeHtml(p.desc)}</p>
+        <ul class="qv-promise"><li>正品鉴定证书</li><li>满¥999顺丰包邮</li><li>7天无理由退换</li></ul>
+        <p class="price">${formatPrice(p.price)}</p>
+        <button class="btn btn-block" data-add="${p.id}" data-close>加入购物车</button>
+      </div>
+    </div>`;
+  dlg.showModal();
 }
 
 /* ---------- 购物车页 ---------- */
@@ -344,7 +468,16 @@ document.addEventListener("DOMContentLoaded", () => {
   else if (page === "cart") renderCart();
   else if (page === "checkout") renderCheckout();
 
+  document.addEventListener("keydown", (e) => {
+    const qv = e.target.closest && e.target.closest("[data-quick]");
+    if (qv && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      openQuickView(qv.dataset.quick);
+    }
+  });
   document.addEventListener("click", (e) => {
+    const qv = e.target.closest("[data-quick]");
+    if (qv) openQuickView(qv.dataset.quick);
     const add = e.target.closest("[data-add]");
     if (add) addToCart(add.dataset.add);
     const q = e.target.closest("[data-qty]");
