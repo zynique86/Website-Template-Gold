@@ -676,7 +676,7 @@ h1, h2, h3 { font-family: var(--song); font-weight: 400; }
 /* 墨团：用一张预先模糊好的图层整体缩放与淡出，只走合成层，晕开过程更顺滑 */
 .ink-blot { position: absolute; left: 50%; top: 50%; width: min(820px, 130vw); aspect-ratio: 4 / 3; transform: translate(-50%, -50%); filter: blur(1.5px); pointer-events: none; }
 .ink-char { font-family: var(--brush); font-size: 150px; text-anchor: middle; fill: #1d1915; fill-opacity: 0; stroke: #1d1915; stroke-width: 2.5; stroke-opacity: 0; stroke-dasharray: 4000; stroke-dashoffset: 4000; }
-.op-ink.s2 .ink-char { transition: stroke-opacity 0s linear calc(var(--i) * .38s), stroke-dashoffset 1s ease-in-out calc(var(--i) * .38s); stroke-opacity: 1; stroke-dashoffset: 0; }
+.op-ink.s2 .ink-char { transition: stroke-opacity 0s linear calc(var(--i) * .22s), stroke-dashoffset .8s ease-in-out calc(var(--i) * .22s); stroke-opacity: 1; stroke-dashoffset: 0; }
 .ink-fill { font-family: var(--brush); font-size: 150px; text-anchor: middle; fill: #1d1915; }
 .ink-seal { position: absolute; left: 50%; top: 50%; transform: translate(calc(min(820px, 94vw) / 2 - 40px), 70px) scale(1.2); opacity: 0; }
 .op-ink.s3 .ink-seal { animation: inkStamp .35s cubic-bezier(.3, 1.6, .5, 1) forwards; }

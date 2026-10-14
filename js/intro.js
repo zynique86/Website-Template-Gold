@@ -50,14 +50,14 @@
           <mask id="inkMask${i}" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="400">
             <g filter="url(#inkSpread)">
               <circle cx="${x}" cy="195" r="0" fill="#fff">
-                <animate class="ink-anim" attributeName="r" from="0" to="120" dur="1.4s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".15 .7 .3 1" data-delay="${i * 380 + 1000}"/>
+                <animate class="ink-anim" attributeName="r" from="0" to="120" dur="1.1s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".15 .7 .3 1" data-delay="${i * 220 + 800}"/>
               </circle>
             </g>
           </mask>
           <text class="ink-fill" x="${x}" y="245" mask="url(#inkMask${i})" filter="url(#inkSoft${i})">${ch}</text>
           <filter id="inkSoft${i}" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="3">
-              <animate class="ink-anim" attributeName="stdDeviation" from="3" to="0" dur="1.1s" begin="indefinite" fill="freeze" data-delay="${i * 380 + 1000}"/>
+              <animate class="ink-anim" attributeName="stdDeviation" from="3" to="0" dur=".9s" begin="indefinite" fill="freeze" data-delay="${i * 220 + 800}"/>
             </feGaussianBlur>
           </filter>
           <text class="ink-char" x="${x}" y="245" style="--i:${i}">${ch}</text>`;
@@ -127,7 +127,7 @@
     at(3400, () => finish(false));
   } else if (variant === "ink") {
     const blot = inkBlot(op.querySelector(".ink-blot"));
-    at(100, () => blot.spread(700 + 3 * 380 + 1000 + 900 - 100)); // 墨团晕开，一直扩散到「缘」字晕完
+    at(100, () => blot.spread(700 + 3 * 220 + 800 + 600 - 100)); // 墨团晕开，一直扩散到「缘」字晕完
     at(100, () => step("s1")); // 墨滴晕开
     // 「缘」的墨色一晕完就立刻收起墨团、盖上印章，然后整页化开
     let sealed = false;
@@ -143,8 +143,8 @@
       step("s2"); // 逐字书写，墨色随后慢慢晕开填满
       const anims = [...op.querySelectorAll(".ink-anim")];
       anims.forEach((a) => at(+a.dataset.delay, () => a.beginElement && a.beginElement()));
-      // 「缘」从 3×380+1000ms 开始晕染，约 0.9 秒后看起来已经填满，此刻立即盖印
-      at(3 * 380 + 1000 + 900, seal);
+      // 「缘」从 3×220+800ms 开始晕染，约 0.6 秒后看起来已经填满，此刻立即盖印
+      at(3 * 220 + 800 + 600, seal);
     });
   } else if (variant === "scroll") {
     at(100, () => step("s1")); // 卷轴落下
