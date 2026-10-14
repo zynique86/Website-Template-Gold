@@ -1,11 +1,12 @@
-// 首页开场动画（四个方案，供挑选）：
+// 首页开场动画。默认方案在 index.html 的 window.INTRO 里设置（目前为 ink）。
+// 四个方案都保留，可用地址 hash 单独播放：
 //   index.html#box    锦盒开启：盒盖掀开，钻石升起并飞入首页的月洞门
 //   index.html#gate   朱门开启：印章盖上，朱红大门向两侧推开
 //   index.html#ink    水墨书写：墨滴晕开，毛笔写出“金玉良缘”，墨色化开
 //   index.html#scroll 卷轴展开：卷轴从中间向两侧展开，露出首页
 (() => {
   const VARIANTS = ["box", "gate", "ink", "scroll"];
-  const variant = location.hash.slice(1);
+  const variant = window.INTRO;
   const root = document.documentElement;
   if (!VARIANTS.includes(variant)) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

@@ -31,3 +31,10 @@ python3 -m http.server 8000
 ## 关于支付
 
 `checkout.html` 是**模拟支付**：提交后显示订单号与支付成功页，不会产生任何真实扣款。上线前需要后端对接微信支付、支付宝或银联等商户接口。购物车数据保存在浏览器 `localStorage` 中。
+
+## 首页开场动画
+
+首页默认播放「水墨书写」开场，每次打开浏览器只播一次。另外三个方案（锦盒开启、朱门开启、卷轴展开）保留备用：
+
+- 单独查看：`index.html#box`、`#gate`、`#ink`、`#scroll`，或打开 `intro-demo.html` 选择。
+- 更换默认：把 `index.html` 里 `window.INTRO = ...("ink")` 的 `"ink"` 改成 `"box"`、`"gate"` 或 `"scroll"`；改成 `""` 则不播放开场。

@@ -10,7 +10,17 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="home">
-  <script>if (["#box", "#gate", "#ink", "#scroll"].includes(location.hash)) document.documentElement.classList.add("intro-playing");</script>
+  <script>
+    // 首页开场：默认水墨（ink），每次打开浏览器只播一次。
+    // 其他方案保留备用：地址加 #box / #gate / #scroll 可播放；要换默认，改下面的 "ink"。
+    window.INTRO = (function (def) {
+      var all = ["box", "gate", "ink", "scroll"], h = location.hash.slice(1);
+      if (all.indexOf(h) > -1) return h;
+      try { if (sessionStorage.getItem("introSeen")) return null; sessionStorage.setItem("introSeen", "1"); } catch (e) {}
+      return all.indexOf(def) > -1 ? def : null;
+    })("ink");
+    if (window.INTRO) document.documentElement.classList.add("intro-playing");
+  </script>
   <header data-header></header>
   <main>
     <section class="hero">
